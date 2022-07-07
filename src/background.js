@@ -24,19 +24,21 @@ async function createWindow () {
       contextIsolation: false
     }
   })
-
+  const args = process.argv.filter((a) => {
+    if (a.includes('--')) {
+      return a
+    }
+  })
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
-    await win.loadURL(`${process.env.WEBPACK_DEV_SERVER_URL}?args=${process.argv}`)
-    // win.removeMenu()
-    // if (!process.env.IS_TEST) win.webContents.openDevTools()
+    await win.loadURL(`${process.env.WEBPACK_DEV_SERVER_URL}?args=${args}`)
+    if (!process.env.IS_TEST) win.webContents.openDevTools()
   } else {
     createProtocol('app')
     // Load the index.html when not in development
-    await win.loadURL('app://./index.html')
-    // win.removeMenu()
+    await win.loadURL(`app://./index.html?args=${args}`)
   }
-  win.webContents.openDevTools()
+  win.removeMenu()
 }
 
 // Quit when all windows are closed.
@@ -83,3 +85,4 @@ if (isDevelopment) {
     })
   }
 }
+
