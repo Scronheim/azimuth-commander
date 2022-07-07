@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import userModule from '@/store/modules/users'
 import vmModule from '@/store/modules/vm'
+import networkSettingsModule from '@/store/modules/networkSettings'
 
 Vue.use(Vuex)
 
@@ -29,5 +30,6 @@ export default new Vuex.Store({
   modules: {
     userModule,
     vmModule,
+    networkSettingsModule,
   },
 })

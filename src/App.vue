@@ -15,6 +15,13 @@
             </v-card-text>
           </v-card>
         </v-tab-item>
+        <v-tab-item>
+          <v-card flat height="84vh">
+            <v-card-text class="pa-0">
+              <NetworkSettings/>
+            </v-card-text>
+          </v-card>
+        </v-tab-item>
       </v-tabs-items>
     </v-main>
     <v-dialog max-width="60%" persistent v-model="showConnectionForm">
@@ -52,11 +59,12 @@
 
 <script>
 const queryString = require('query-string')
-import IndexPage from '@/components/IndexPage'
+import IndexPage from '@/components/pages/IndexPage'
+import NetworkSettings from '@/components/pages/NetworkSettings'
 import FooterBlock from '@/components/FooterBlock'
 export default {
   name: 'App',
-  components: {FooterBlock, IndexPage},
+  components: {NetworkSettings, FooterBlock, IndexPage},
   mounted() {
     this.$vuetify.theme.dark = true
     if (this.args.length) {
@@ -98,7 +106,7 @@ export default {
       login: 'admin',
       password: '2360087',
     },
-    activeTab: 0,
+    activeTab: 1,
   }),
   methods: {
     async refreshIndexPage() {

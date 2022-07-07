@@ -1,10 +1,39 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify/lib/framework'
-import { VTextField, VBtn } from 'vuetify/lib'
+import { VTextField, VBtn, VSelect } from 'vuetify/lib'
 
 Vue.use(Vuetify)
 
 // prefix "C" means custom
+Vue.component('CSelect', {
+  extends: VSelect,
+  props: {
+    readonly: {
+      type: Boolean,
+      default: false,
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+    hideDetails: {
+      type: Boolean,
+      default: true,
+    },
+    label: {
+      type: String,
+      default: '',
+    },
+    outlined: {
+      type: Boolean,
+      default: true,
+    },
+    dense: {
+      type: Boolean,
+      default: true,
+    },
+  }
+})
 Vue.component('CTextField', {
   extends: VTextField,
   props: {
