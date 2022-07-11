@@ -1,16 +1,16 @@
 <template>
-  <v-card>
-    <v-card-title>{{ isEdit ? 'Редактирование': 'Добавление' }} сетевого моста</v-card-title>
+  <v-card flat>
+    <v-card-title>{{ isEdit ? 'Редактирование': 'Добавление' }} сетевого моста {{ bridge.name }}</v-card-title>
     <v-card-text>
       <v-row>
         <v-col>
-          <c-text-field label="Имя устройства" readonly :value="bridge.name"/>
+          <c-text-field label="Имя устройства" disabled :value="bridge.name"/>
         </v-col>
         <v-col>
-          <c-text-field label="MAC адрес" readonly :value="bridge.mac"/>
+          <c-text-field label="MAC адрес" disabled :value="bridge.mac"/>
         </v-col>
         <v-col>
-          <c-text-field label="Линк" readonly :value="bridge.link"/>
+          <c-text-field label="Линк" disabled :value="bridge.link"/>
         </v-col>
       </v-row>
       <v-row>
@@ -27,7 +27,22 @@
           <c-text-field label="Шлюз" :value="bridge.gateway" @change="$emit('changeGateway', $event)"/>
         </v-col>
       </v-row>
-      <v-card-subtitle class="pl-0">DNS <v-btn icon><v-icon>mdi-plus</v-icon></v-btn></v-card-subtitle>
+      <v-card-subtitle class="pl-0">DNS
+        <v-btn icon color="success" @click="addDnsServer">
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
+      </v-card-subtitle>
+      <c-text-field v-for="(dns, index) in bridge['dns-nameservers']" :key="dns"
+                    placeholder="Введите IP адрес"
+                    :value="bridge['dns-nameservers'][index]"
+                    @input="$emit('changeDnsServer', {index, value: $event})"
+      >
+        <template #append-outer>
+          <v-btn icon color="error" @click="removeDnsServer(index)">
+            <v-icon>mdi-minus</v-icon>
+          </v-btn>
+        </template>
+      </c-text-field>
 
     </v-card-text>
   </v-card>
@@ -51,7 +66,15 @@ export default {
       {text: 'Статический', value: 'static'},
       {text: 'Динамический', value: 'dhcp'},
     ],
-  })
+  }),
+  methods: {
+    removeDnsServer(index) {
+      this.$emit('removeDnsServer', index)
+    },
+    addDnsServer() {
+      this.$emit('addDnsServer')
+    }
+  }
 }
 </script>
 

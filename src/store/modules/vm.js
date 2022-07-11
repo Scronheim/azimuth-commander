@@ -20,6 +20,7 @@ const vmModule = {
       },
     },
     flags: [],
+    peers: [],
   },
   mutations: {
     setVmInfo(state, payload) {
@@ -33,6 +34,9 @@ const vmModule = {
     },
     setFlags(state, payload) {
       state.flags = payload
+    },
+    setPeers(state, payload) {
+      state.peers = payload
     },
   },
   actions: {
@@ -56,6 +60,10 @@ const vmModule = {
       const {data} = await axios.get('/api/flags')
       commit('setFlags', data.data)
     },
+    async getVmPeers({commit}) {
+      const {data} = await axios.get('/peers/api/list')
+      commit('setPeers', data.data)
+    },
   },
   getters: {
     vmInfo: state => state.info,
@@ -70,6 +78,7 @@ const vmModule = {
       })
     },
     flags: state => state.flags,
+    peers: state => state.peers,
     diskTotalInGb: state => (state.system.disktotal / 1024 / 1024).toFixed(),
     diskFreeInGb: state => (state.system.diskfree / 1024 / 1024).toFixed(),
     percentOfFreeDiskSpace: state => ((state.system.diskfree/state.system.disktotal)*100).toFixed(1),

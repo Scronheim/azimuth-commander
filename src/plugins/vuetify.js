@@ -8,6 +8,17 @@ Vue.use(Vuetify)
 Vue.component('CSelect', {
   extends: VSelect,
   props: {
+    itemValue: {
+      type: String,
+      default: 'value',
+    },
+    itemText: {
+      type: String,
+      default: 'text',
+    },
+    items: {
+      type: Array,
+    },
     readonly: {
       type: Boolean,
       default: false,

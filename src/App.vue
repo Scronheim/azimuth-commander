@@ -4,6 +4,10 @@
       <v-tabs v-model="activeTab">
         <v-tab @click="refreshIndexPage">Главная</v-tab>
         <v-tab>Сеть</v-tab>
+        <v-tab @click="refreshVideoSources">Видео</v-tab>
+        <v-tab>GPS/ГЛОНАСС</v-tab>
+        <v-tab>Климат</v-tab>
+        <v-tab>Мониторинг</v-tab>
       </v-tabs>
     </v-app-bar>
     <v-main v-if="isAuth">
@@ -21,6 +25,18 @@
               <NetworkSettings/>
             </v-card-text>
           </v-card>
+        </v-tab-item>
+        <v-tab-item>
+          <VideoSources/>
+        </v-tab-item>
+        <v-tab-item>
+          <Gps/>
+        </v-tab-item>
+        <v-tab-item>
+          <ClimateStatus/>
+        </v-tab-item>
+        <v-tab-item>
+          <Monitoring/>
         </v-tab-item>
       </v-tabs-items>
     </v-main>
@@ -51,20 +67,24 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-footer app absolute inset padless v-if="isAuth">
+    <v-footer app padless width="auto" v-if="isAuth">
       <FooterBlock/>
     </v-footer>
   </v-app>
 </template>
 
 <script>
-const queryString = require('query-string')
 import IndexPage from '@/components/pages/IndexPage'
 import NetworkSettings from '@/components/pages/NetworkSettings'
+import VideoSources from '@/components/pages/VideoSources'
 import FooterBlock from '@/components/FooterBlock'
+import Gps from '@/components/pages/Gps'
+import ClimateStatus from '@/components/pages/ClimateStatus'
+import Monitoring from '@/components/pages/Monitoring'
+const queryString = require('query-string')
 export default {
   name: 'App',
-  components: {NetworkSettings, FooterBlock, IndexPage},
+  components: {Monitoring, ClimateStatus, Gps, VideoSources, NetworkSettings, FooterBlock, IndexPage},
   mounted() {
     this.$vuetify.theme.dark = true
     if (this.args.length) {
@@ -80,6 +100,7 @@ export default {
         }
       })
     }
+    this.login()
   },
   computed: {
     args() {
@@ -106,15 +127,19 @@ export default {
       login: 'admin',
       password: '2360087',
     },
-    activeTab: 1,
+    activeTab: 5,
   }),
   methods: {
+    async refreshVideoSources() {
+      await this.$store.dispatch('getConnectedGige')
+      await this.$store.dispatch('getRtspServers')
+      await this.$store.dispatch('getRtspClients')
+    },
     async refreshIndexPage() {
       await this.$store.dispatch('getVmInfo')
       await this.$store.dispatch('getSystemInfo')
       await this.$store.dispatch('getModules')
       await this.$store.dispatch('getFlags')
-      this.$toast.success('Данные обновлены')
     },
     login() {
       this.$store.dispatch('login', this.connection)
@@ -124,7 +149,5 @@ export default {
 </script>
 
 <style>
-html {
-  overflow: hidden;
-}
+
 </style>

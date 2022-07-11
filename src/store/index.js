@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import userModule from '@/store/modules/users'
 import vmModule from '@/store/modules/vm'
 import networkSettingsModule from '@/store/modules/networkSettings'
+import videoSourcesModule from '@/store/modules/videoSources'
 
 Vue.use(Vuex)
 
@@ -17,6 +18,9 @@ export default new Vuex.Store({
     },
   },
   mutations: {
+    setConnectionAuth(state, auth) {
+      state.connection.auth = auth
+    },
     setConnection(state, params) {
       state.connection = params
     }
@@ -31,5 +35,6 @@ export default new Vuex.Store({
     userModule,
     vmModule,
     networkSettingsModule,
+    videoSourcesModule,
   },
 })

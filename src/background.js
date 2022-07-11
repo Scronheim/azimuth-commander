@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, protocol, BrowserWindow, ipcMain } from 'electron'
+import { app, protocol, BrowserWindow } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 
@@ -15,10 +15,9 @@ async function createWindow () {
   // Create the browser window.
   const win = new BrowserWindow({
     width: 1200,
-    height: 700,
+    height: 785,
     darkTheme: true,
     webPreferences: {
-      // preload: 'preload.js',
       webSecurity: false,
       nodeIntegration: true,
       contextIsolation: false

@@ -5,8 +5,8 @@ module.exports = defineConfig({
   ],
   devServer: {
     proxy: {
-      '/api*': {
-        target: 'http://192.168.24.97',
+      '/video*': {
+        target: 'http://172.17.23.17',
         ws: true,
         changeOrigin: true,
       },
