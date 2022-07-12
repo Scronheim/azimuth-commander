@@ -127,7 +127,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios'
 
 export default {
   name: "ClimateStatus",
@@ -141,12 +141,20 @@ export default {
   }),
   methods: {
     async getClimateStatus() {
-      const {data} = await axios.get('/climat/api/status')
-      this.status = data.data
+      try {
+        const {data} = await axios.get('/climat/api/status')
+        this.status = data.data
+      } catch (e) {
+        this.$toast.error(e.message)
+      }
     },
     async getClimateSettings() {
-      const {data} = await axios.get('/climat/api/settings')
-      this.settings = data.data
+      try {
+        const {data} = await axios.get('/climat/api/settings')
+        this.settings = data.data
+      } catch (e) {
+        this.$toast.error(e.message)
+      }
     },
   }
 }

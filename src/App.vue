@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-app-bar app dense v-if="isAuth">
-      <v-tabs v-model="activeTab">
+      <v-tabs v-model="activeTab" @change="changeTab">
         <v-tab @click="refreshIndexPage">Главная</v-tab>
         <v-tab>Сеть</v-tab>
         <v-tab @click="refreshVideoSources">Видео</v-tab>
@@ -127,9 +127,16 @@ export default {
       login: 'admin',
       password: '2360087',
     },
-    activeTab: 5,
+    activeTab: 4,
   }),
   methods: {
+    changeTab(tabNumber) {
+      if (tabNumber !== 3) {
+        this.$store.commit('clearGpsDataIntervalId')
+      } else {
+        this.$store.dispatch('startIntervalForGpsData')
+      }
+    },
     async refreshVideoSources() {
       await this.$store.dispatch('getConnectedGige')
       await this.$store.dispatch('getRtspServers')

@@ -4,6 +4,7 @@ import userModule from '@/store/modules/users'
 import vmModule from '@/store/modules/vm'
 import networkSettingsModule from '@/store/modules/networkSettings'
 import videoSourcesModule from '@/store/modules/videoSources'
+import gpsModule from '@/store/modules/gps'
 
 Vue.use(Vuex)
 
@@ -36,5 +37,6 @@ export default new Vuex.Store({
     vmModule,
     networkSettingsModule,
     videoSourcesModule,
+    gpsModule,
   },
 })

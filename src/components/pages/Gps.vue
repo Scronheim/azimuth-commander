@@ -87,16 +87,15 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { yandexMap, ymapMarker} from 'vue-yandex-maps'
 
 export default {
   name: "Gps",
   components: { yandexMap, ymapMarker},
-  mounted() {
-    this.startIntervalForGpsData()
-  },
   computed: {
+    gpsData() {
+      return this.$store.getters.gpsData
+    },
     averageSnr() {
       const inTracking = this.gpsData.satellites.filter(s => s.snr !== 0).length
       return (this.gpsData.satellites.reduce((accum, item) => accum + item.snr, 0) / inTracking).toFixed(2)
@@ -122,23 +121,8 @@ export default {
       'Режим ручного ввода',
       'Режим симулятора'
     ],
-    gpsData: {
-      lat: 57.9804,
-      lon: 56.1934,
-      configuration: {},
-      satellites: [],
-      telemetry: {},
-    },
   }),
-  methods: {
-    async startIntervalForGpsData() {
-      this.interval = setInterval(async () => {
-        const {data} = await axios.get('/gpsdata')
-        this.gpsData = data.data
-      }, 1000)
-    },
-  },
-
+  methods: {},
 }
 </script>
 

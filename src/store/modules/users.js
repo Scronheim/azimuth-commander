@@ -20,7 +20,7 @@ const usersModule = {
     },
     async login({commit, dispatch}, payload) {
       const headers = new Headers()
-      headers.set('Authorization', 'Basic ' + btoa(payload.login + ":" + payload.password));
+      headers.set('Authorization', 'Basic ' + btoa(payload.login + ":" + payload.password))
       try {
         const {status, data} = await axios.get(`http://${payload.ip}/api/info`, {
           auth: {
@@ -35,7 +35,7 @@ const usersModule = {
             username: payload.login,
             password: payload.password
           }
-          Vue.$toast.success('Вход выполнен')
+          // Vue.$toast.success('Вход выполнен')
           payload.auth = true
           commit('setConnection', payload)
           commit('setVmInfo', data.data)

@@ -21,10 +21,12 @@
       </v-col>
     </v-row>
 
-    <v-dialog v-model="bigImageDialog">
-      <v-card-text>
-        <v-img :src="`data:image/jpeg;base64,${bigImageSrc}`"/>
-      </v-card-text>
+    <v-dialog v-model="bigImageDialog" fullscreen>
+      <v-card>
+        <v-card-text>
+          <v-img @click="bigImageDialog = false" :src="`data:image/jpeg;base64,${bigImageSrc}`"/>
+        </v-card-text>
+      </v-card>
     </v-dialog>
   </v-container>
 </template>
